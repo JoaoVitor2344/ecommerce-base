@@ -88,18 +88,18 @@ new class extends Component {
     selectAll = value.length === {{ $users->count() }};
 })">
     @if (session()->has('message'))
-        <div class="px-6 py-4 bg-green-50 dark:bg-green-800 border-b border-green-200" x-data="{ show: true }" x-show="show"
+        <div class="px-6 py-4 bg-green-50 dark:bg-green-900/50 border-b border-green-200 dark:border-green-800" x-data="{ show: true }" x-show="show"
             x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 transform scale-95"
             x-transition:enter-end="opacity-100 transform scale-100" x-transition:leave="transition ease-in duration-200"
             x-transition:leave-start="opacity-100 transform scale-100"
             x-transition:leave-end="opacity-0 transform scale-95">
             <div class="flex items-center justify-between">
                 <div class="flex items-center">
-                    <flux:icon.check-circle class="h-5 w-5 text-green-600 mr-2" />
-                    <p class="text-sm text-green-800 dark:text-green-100">{{ session('message') }}</p>
+                    <flux:icon.check-circle class="h-5 w-5 text-green-600 dark:text-green-400 mr-2" />
+                    <p class="text-sm text-green-800 dark:text-green-200">{{ session('message') }}</p>
                 </div>
                 <button @click="show = false"
-                    class="text-green-600 hover:text-green-800 dark:text-green-100 dark:hover:text-green-200">
+                    class="text-green-600 dark:text-green-400 hover:text-green-800 dark:hover:text-green-200">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
                         </path>
@@ -110,10 +110,10 @@ new class extends Component {
     @endif
 
     <!-- Header da Tabela com Ações em Lote -->
-    <div class="px-6 py-4 border-b border-gray-200 bg-transparent dark:bg-neutral-900 text-gray-900 dark:text-gray-100">
+    <div class="px-6 py-4 border-b border-gray-200 dark:border-zinc-700 bg-transparent dark:bg-zinc-800 text-gray-900 dark:text-white">
         <div class="flex justify-between items-center">
             <div class="flex items-center gap-4">
-                <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100">
+                <h3 class="text-lg font-medium text-gray-900 dark:text-white">
                     Usuários ({{ $users->total() }})
                 </h3>
 
@@ -121,11 +121,11 @@ new class extends Component {
                 <div x-show="showBulkActions" x-transition:enter="transition ease-out duration-200"
                     x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
                     class="flex items-center gap-2">
-                    <span class="text-sm text-gray-600">
+                    <span class="text-sm text-gray-600 dark:text-gray-400">
                         <span x-text="selectedUsers.length"></span> selecionado(s)
                     </span>
                     <button
-                        class="px-3 py-1 text-xs bg-red-100 text-red-800 rounded-md hover:bg-red-200 transition-colors"
+                        class="px-3 py-1 text-xs bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 rounded-md hover:bg-red-200 dark:hover:bg-red-800 transition-colors"
                         @click="if(confirm('Excluir usuários selecionados?')) { /* Ação de exclusão em lote */ }">
                         Excluir Selecionados
                     </button>
@@ -140,43 +140,43 @@ new class extends Component {
 
     <!-- Tabela -->
     <div class="overflow-x-auto">
-        <table class="min-w-full divide-y divide-gray-200">
-            <thead>
+        <table class="min-w-full divide-y divide-gray-200 dark:divide-zinc-700">
+            <thead class="bg-gray-50 dark:bg-zinc-900">
                 <tr>
                     <th
-                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                         Usuário
                     </th>
                     <th
-                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                         Função
                     </th>
                     <th
-                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                         Status
                     </th>
                     <th
-                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                         Criado em
                     </th>
-                    <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                         Ações
                     </th>
                 </tr>
             </thead>
-            <tbody class="divide-y divide-gray-200">
+            <tbody class="bg-white dark:bg-zinc-800 divide-y divide-gray-200 dark:divide-zinc-700">
                 @forelse($users as $user)
-                    <tr class="hover:bg-neutral-100 dark:hover:bg-neutral-800">
+                    <tr class="hover:bg-gray-50 dark:hover:bg-zinc-700/50 transition-colors">
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="flex items-center">
                                 <div class="h-10 w-10 flex-shrink-0">
                                     <flux:avatar size="sm" :initials="$user->initials()" />
                                 </div>
                                 <div class="ml-4">
-                                    <div class="text-sm font-medium text-gray-900 dark:text-gray-100">
+                                    <div class="text-sm font-medium text-gray-900 dark:text-white">
                                         {{ $user->name }}
                                     </div>
-                                    <div class="text-sm text-gray-500">
+                                    <div class="text-sm text-gray-500 dark:text-gray-400">
                                         {{ $user->email }}
                                     </div>
                                 </div>
@@ -190,7 +190,7 @@ new class extends Component {
                                     </flux:badge>
                                 @endforeach
                             @else
-                                <span class="text-gray-400 text-sm">Sem Função</span>
+                                <span class="text-gray-400 dark:text-gray-500 text-sm">Sem Função</span>
                             @endif
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
@@ -200,7 +200,7 @@ new class extends Component {
                                 <flux:badge size="sm" color="yellow">Pendente</flux:badge>
                             @endif
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                             {{ $user->created_at->format('d/m/Y H:i') }}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
@@ -238,10 +238,10 @@ new class extends Component {
                     <tr>
                         <td colspan="5" class="px-6 py-12 text-center">
                             <div class="flex flex-col items-center">
-                                <flux:icon.users class="h-12 w-12 text-gray-400 mb-4" />
-                                <h3 class="text-sm font-medium text-gray-900 mb-1 dark:text-gray-100">Nenhum usuário
+                                <flux:icon.users class="h-12 w-12 text-gray-400 dark:text-gray-500 mb-4" />
+                                <h3 class="text-sm font-medium text-gray-900 dark:text-white mb-1">Nenhum usuário
                                     encontrado</h3>
-                                <p class="text-sm text-gray-500">Tente ajustar seus critérios de pesquisa ou filtro</p>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">Tente ajustar seus critérios de pesquisa ou filtro</p>
                             </div>
                         </td>
                     </tr>
@@ -252,7 +252,7 @@ new class extends Component {
 
     <!-- Paginação -->
     @if ($users->hasPages())
-        <div class="px-6 py-4 border-t border-gray-200">
+        <div class="px-6 py-4 border-t border-gray-200 dark:border-zinc-700 bg-gray-50 dark:bg-zinc-900">
             {{ $users->links() }}
         </div>
     @endif

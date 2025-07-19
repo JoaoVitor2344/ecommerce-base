@@ -72,5 +72,5 @@ select:focus[data-flux-control] {
 }
 
 .stats-card {
-    @apply p-6 cursor-pointer group hover:shadow-md;
+    @apply p-6 cursor-pointer hover:shadow-md;
 }

@@ -62,7 +62,7 @@ new class extends Component {
     }
 }; ?>
 
-<div class="card-bg bg-white dark:bg-gray-800 rounded-lg shadow-sm border p-6 mb-6" x-data="{
+<div class="card-bg bg-white dark:bg-zinc-800 rounded-lg shadow-sm border dark:border-zinc-700 p-6 mb-6" x-data="{
         showFilters: window.innerWidth >= 1024, // Mostra filtros por padrão em telas grandes
         get hasActiveFilters() {
             return $wire.search || $wire.role || $wire.status
@@ -70,8 +70,8 @@ new class extends Component {
     }">
     <!-- Header dos Filtros -->
     <div class="flex items-center justify-between mb-4">
-        <h3 class="text-lg font-medium text-gray-900 dark:text-gray-200 flex items-center">
-            <svg class="w-5 h-5 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <h3 class="text-lg font-medium text-gray-900 dark:text-white flex items-center">
+            <svg class="w-5 h-5 mr-2 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                     d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
             </svg>
@@ -80,14 +80,14 @@ new class extends Component {
 
         <div class="flex items-center gap-2">
             <!-- Indicador de filtros ativos -->
-            <div x-show="hasActiveFilters" x-transition class="px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded-full"
+            <div x-show="hasActiveFilters" x-transition class="px-2 py-1 text-xs bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full"
                 style="display: none;">
                 Filtros ativos
             </div>
 
             <!-- Botão toggle para mostrar/esconder filtros em telas menores -->
             <button @click="showFilters = !showFilters"
-                class="lg:hidden p-2 text-gray-400 hover:text-gray-600 rounded-md">
+                class="lg:hidden p-2 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 rounded-md">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path x-show="!showFilters" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M19 9l-7 7-7-7"></path>
@@ -133,20 +133,29 @@ new class extends Component {
         </div>
 
         <!-- Filtros Rápidos -->
-        <div class="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+        <div class="mt-4 pt-4 border-t border-gray-200 dark:border-zinc-600">
             <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Filtros rápidos:</p>
             <div class="flex flex-wrap gap-2">
                 <button @click="$wire.set('role', 'admin')" class="px-3 py-1 text-xs rounded-full transition-colors"
-                    :class="{ 'bg-red-500 text-white ring-2 ring-red-300': $wire.role === 'admin', 'bg-red-100 text-red-800 hover:bg-red-200': $wire.role !== 'admin' }">
+                    :class="{ 
+                        'bg-red-500 dark:bg-red-600 text-white ring-2 ring-red-300 dark:ring-red-400': $wire.role === 'admin', 
+                        'bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 hover:bg-red-200 dark:hover:bg-red-800': $wire.role !== 'admin' 
+                    }">
                     👑 Administradores
                 </button>
                 <button @click="$wire.set('status', 'active')" class="px-3 py-1 text-xs rounded-full transition-colors"
-                    :class="{ 'bg-green-500 text-white ring-2 ring-green-300': $wire.status === 'active', 'bg-green-100 text-green-800 hover:bg-green-200': $wire.status !== 'active' }">
+                    :class="{ 
+                        'bg-green-500 dark:bg-green-600 text-white ring-2 ring-green-300 dark:ring-green-400': $wire.status === 'active', 
+                        'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 hover:bg-green-200 dark:hover:bg-green-800': $wire.status !== 'active' 
+                    }">
                     ✅ Usuários Ativos
                 </button>
                 <button @click="$wire.set('status', 'inactive')"
                     class="px-3 py-1 text-xs rounded-full transition-colors"
-                    :class="{ 'bg-yellow-500 text-white ring-2 ring-yellow-300': $wire.status === 'inactive', 'bg-yellow-100 text-yellow-800 hover:bg-yellow-200': $wire.status !== 'inactive' }">
+                    :class="{ 
+                        'bg-yellow-500 dark:bg-yellow-600 text-white ring-2 ring-yellow-300 dark:ring-yellow-400': $wire.status === 'inactive', 
+                        'bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 hover:bg-yellow-200 dark:hover:bg-yellow-800': $wire.status !== 'inactive' 
+                    }">
                     ⏳ Pendentes
                 </button>
             </div>
