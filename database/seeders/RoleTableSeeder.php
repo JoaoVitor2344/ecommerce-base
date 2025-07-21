@@ -17,12 +17,16 @@ class RoleTableSeeder extends Seeder
             'user',
         ];
 
-        foreach ($roles as $role) {
-            \Spatie\Permission\Models\Role::firstOrCreate(['name' => $role]);
+        foreach ($roles as $name) {
+            \Spatie\Permission\Models\Role::firstOrCreate(['name' => $name, 'guard_name' => 'web']);
         }
 
-        $adminRole = \Spatie\Permission\Models\Role::findByName('admin');
+        $adminRole = \Spatie\Permission\Models\Role::findByName('admin', 'web');
         $permissions = \Spatie\Permission\Models\Permission::all();
-        $adminRole->syncPermissions($permissions);
+        foreach ($permissions as $permission) {
+            if (!$adminRole->hasPermissionTo($permission)) {
+                $adminRole->givePermissionTo($permission);
+            }
+        }
     }
 }

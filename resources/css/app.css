@@ -1,5 +1,5 @@
-@import "tailwindcss";
-@import "../../vendor/livewire/flux/dist/flux.css";
+@import 'tailwindcss';
+@import '../../vendor/livewire/flux/dist/flux.css';
 
 @source '../views';
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
@@ -8,10 +8,40 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+:root {
+    /* Color Variables */
+    --primary: theme(colors.blue.600);
+    --primary-hover: theme(colors.blue.700);
+    --primary-focus: theme(colors.blue.500);
+    
+    --secondary: theme(colors.gray.600);
+    --secondary-hover: theme(colors.gray.700);
+    --secondary-focus: theme(colors.gray.500);
+    
+    --success: theme(colors.green.600);
+    --success-hover: theme(colors.green.700);
+    --success-focus: theme(colors.green.500);
+    
+    --danger: theme(colors.red.600);
+    --danger-hover: theme(colors.red.700);
+    --danger-focus: theme(colors.red.500);
+    
+    --warning: theme(colors.yellow.500);
+    --warning-hover: theme(colors.yellow.600);
+    --warning-focus: theme(colors.yellow.400);
+    
+    --info: theme(colors.cyan.600);
+    --info-hover: theme(colors.cyan.700);
+    --info-focus: theme(colors.cyan.500);
+    
+    /* UI Variables */
+    --text-white: theme(colors.white);
+    --border-neutral: theme(colors.neutral.200);
+    --border-neutral-dark: theme(colors.neutral.700);
+}
+
 @theme {
-    --font-sans: "Instrument Sans", ui-sans-serif, system-ui, sans-serif,
-        "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
-        "Noto Color Emoji";
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 
     --color-zinc-50: #fafafa;
     --color-zinc-100: #f5f5f5;
@@ -38,16 +68,23 @@
     }
 }
 
-@layer base {
+/* ==========================================================================
+   Base Layer
+   ========================================================================== */
 
+@layer base {
     *,
     ::after,
     ::before,
     ::backdrop,
     ::file-selector-button {
-        border-color: var(--color-gray-200, currentColor);
+        border-color: var(--border-neutral, currentColor);
     }
 }
+
+/* ==========================================================================
+   Form Components
+   ========================================================================== */
 
 [data-flux-field]:not(ui-radio, ui-checkbox) {
     @apply grid gap-2;
@@ -63,14 +100,109 @@ select:focus[data-flux-control] {
     @apply outline-hidden ring-2 ring-accent ring-offset-2 ring-offset-accent-foreground;
 }
 
-/* \[:where(&)\]:size-4 {
-    @apply size-4;
-} */
+/* ==========================================================================
+   Card Components
+   ========================================================================== */
 
-.card-bg {
-    @apply bg-zinc-100 border rounded-lg shadow-sm transition-all duration-200 dark:bg-neutral-900 dark:border-neutral-700;
+.card {
+    @apply relative overflow-hidden rounded-xl border;
+    border-color: var(--border-neutral);
 }
 
-.stats-card {
-    @apply p-6 cursor-pointer hover:shadow-md;
+.dark .card {
+    @apply border-neutral-700;
+}
+
+/* ==========================================================================
+   Button Components
+   ========================================================================== */
+
+/* Primary Button */
+.btn-primary {
+    @apply text-white;
+    background-color: var(--primary);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-hover);
+}
+
+.btn-primary:focus {
+    @apply ring-2 ring-offset-2;
+    --tw-ring-color: var(--primary-focus);
+}
+
+/* Secondary Button */
+.btn-secondary {
+    @apply text-white;
+    background-color: var(--secondary);
+}
+
+.btn-secondary:hover {
+    background-color: var(--secondary-hover);
+}
+
+.btn-secondary:focus {
+    @apply ring-2 ring-offset-2;
+    --tw-ring-color: var(--secondary-focus);
+}
+
+/* Success Button */
+.btn-success {
+    @apply text-white;
+    background-color: var(--success);
+}
+
+.btn-success:hover {
+    background-color: var(--success-hover);
+}
+
+.btn-success:focus {
+    @apply ring-2 ring-offset-2;
+    --tw-ring-color: var(--success-focus);
+}
+
+/* Danger Button */
+.btn-danger {
+    @apply text-white;
+    background-color: var(--danger);
+}
+
+.btn-danger:hover {
+    background-color: var(--danger-hover);
+}
+
+.btn-danger:focus {
+    @apply ring-2 ring-offset-2;
+    --tw-ring-color: var(--danger-focus);
+}
+
+/* Warning Button */
+.btn-warning {
+    @apply text-white;
+    background-color: var(--warning);
+}
+
+.btn-warning:hover {
+    background-color: var(--warning-hover);
+}
+
+.btn-warning:focus {
+    @apply ring-2 ring-offset-2;
+    --tw-ring-color: var(--warning-focus);
+}
+
+/* Info Button */
+.btn-info {
+    @apply text-white;
+    background-color: var(--info);
+}
+
+.btn-info:hover {
+    background-color: var(--info-hover);
+}
+
+.btn-info:focus {
+    @apply ring-2 ring-offset-2;
+    --tw-ring-color: var(--info-focus);
 }

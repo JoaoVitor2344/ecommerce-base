@@ -13,13 +13,23 @@ class PermissionTableSeeder extends Seeder
     public function run(): void
     {
         $permissions = [
-            'access-panel',
-            'users.index',
-            'users.view',
-            'users.create',
-            'users.edit',
-            'users.delete',
-        ];  
+            'manage-panel',
+            'manage-permissions',
+            'manage-roles',
+            'manage-users',
+
+            // Permissions
+            'view-permissions',
+            'create-permissions',
+            'edit-permissions',
+            'delete-permissions',
+
+            // Roles
+            'view-roles',
+            'create-roles',
+            'edit-roles',
+            'delete-roles',
+        ];
 
         foreach ($permissions as $permission) {
             \Spatie\Permission\Models\Permission::firstOrCreate(['name' => $permission]);

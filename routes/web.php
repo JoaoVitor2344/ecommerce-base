@@ -14,31 +14,57 @@ Route::view('dashboard', 'dashboard')
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
 
-    Route::view('settings/profile', 'settings.profile')->name('settings.profile');
-    Route::view('settings/password', 'settings.password')->name('settings.password');
-    Route::view('settings/appearance', 'settings.appearance')->name('settings.appearance');
+    Volt::route('settings/profile', 'settings.profile')->name('settings.profile');
+    Volt::route('settings/password', 'settings.password')->name('settings.password');
+    Volt::route('settings/appearance', 'settings.appearance')->name('settings.appearance');
 
-    Route::middleware(['can:access-panel'])
-        ->prefix('/painel')
+    Route::middleware(['can:manage-panel'])
+        ->prefix('panel')
+        ->name('panel.')
         ->group(function () {
-            Route::middleware(['can:users.index'])
-                ->get('usuarios', function () {
-                    return view('livewire.panel.users.index');
-                })
-                ->name('panel.users.index');
+           Route::middleware(['can:manage-permissions'])
+                ->prefix('permissions')
+                ->name('permissions.')
+                ->group(function () {
+                    Volt::route('/', 'panel.permission.index')
+                        ->middleware(['can:view-permissions'])
+                        ->name('index');
+                });
 
-            Route::get('usuarios/create', function () {
-                return redirect()->route('panel.users.index')->with('message', 'Funcionalidade em desenvolvimento');
-            })->name('panel.users.create');
+            Route::middleware(['can:manage-roles'])
+                ->prefix('roles')
+                ->name('roles.')
+                ->group(function () {
+                    Volt::route('/', 'panel.role.index')
+                        ->middleware(['can:view-roles'])
+                        ->name('index');
+                    
+                    Route::get('/create', function () {
+                        return response()->json(['message' => 'Rota ainda não implementada']);
+                    })->name('create');
+                    
+                    Route::get('/{role}/edit', function () {
+                        return response()->json(['message' => 'Rota ainda não implementada']);
+                    })->name('edit');
+                });
 
-            Route::get('usuarios/{user}', function ($user) {
-                return redirect()->route('panel.users.index')->with('message', 'Funcionalidade em desenvolvimento');
-            })->name('panel.users.show');
-
-            Route::get('usuarios/{user}/edit', function ($user) {
-                return redirect()->route('panel.users.index')->with('message', 'Funcionalidade em desenvolvimento');
-            })->name('panel.users.edit');
+            Route::middleware(['can:manage-users'])
+                ->prefix('users')
+                ->name('users.')
+                ->group(function () {
+                    Route::get('/', function () {
+                        return response()->json(['message' => 'Rota ainda não implementada']);
+                    })->name('index');
+                    
+                    Route::get('/create', function () {
+                        return response()->json(['message' => 'Rota ainda não implementada']);
+                    })->name('create');
+                    
+                    Route::get('/{user}/edit', function () {
+                        return response()->json(['message' => 'Rota ainda não implementada']);
+                    })->name('edit');
+                });
         });
 });
 
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';
